@@ -48,6 +48,5 @@ with open('./yelp/yelp_academic_dataset_review.json', encoding='utf8') as f:
         for i in d:
             dictWord[i] += 1
         return dictWord[t]/len(d)
-    ss
     print('tdf(\'in\')',tf('in',arrayWord))
 
