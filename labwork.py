@@ -16,11 +16,11 @@ with open('./yelp/yelp_academic_dataset_review.json', encoding='utf8') as f:
 
     dataText = dataJSON['text']
     dataText = dataText.translate(str.maketrans('', '', string.punctuation))
-    print('remove punctuation===>',dataText)
+    print('remove punctuation===> ',dataText)
     noBreakLine = dataText.replace('\n', ' ').replace('\r', '')
-    print('remove Break Line===>',noBreakLine)
+    print('remove Break Line===> ',noBreakLine)
     arrayWord = noBreakLine.split(" ")
-    print('Count occurence:',len(arrayWord))
+    print('Count occurence: ',len(arrayWord))
 
     stop_words = set(stopwords.words('english'))
     word_tokens = word_tokenize(noBreakLine)
@@ -31,5 +31,23 @@ with open('./yelp/yelp_academic_dataset_review.json', encoding='utf8') as f:
     for w in word_tokens:
         if w not in stop_words:
             filtered_sentence.append(w)
-    print(word_tokens)
-    print('String remove stop word=====>',' '.join(filtered_sentence))
+    print('String remove stop word=====>  ',' '.join(filtered_sentence))
+
+    dictWord = {}
+    for i in arrayWord:
+        dictWord[i]=0
+
+    for i in arrayWord:
+        dictWord[i] += 1
+
+
+    def tf(t,d):
+        dictWord = {}
+        for i in d:
+            dictWord[i] = 0
+        for i in d:
+            dictWord[i] += 1
+        return dictWord[t]/len(d)
+    ss
+    print('tdf(\'in\')',tf('in',arrayWord))
+
