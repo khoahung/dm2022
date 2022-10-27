@@ -31,7 +31,7 @@ def initClusters(reviews):
     return clusters
 
 
-def distanceMatrix(clus):
+def distMatrix(clus):
     initMat = [[None for col in range(len(clus))]
                for row in range(len(clus))]
 
@@ -75,7 +75,7 @@ def min_clustering(data, no_of_clusters):
     clusters = initClusters(data)
     print(clusters)
     while len(clusters) > no_of_clusters:
-        mat = distanceMatrix(clusters)
+        mat = distMatrix(clusters)
         mini = findMinCoor(mat)
         recluster(clusters, mini)
         print(clusters)
