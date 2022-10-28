@@ -1,27 +1,37 @@
-import json
+import numpy as np
+import math
+from random import seed, randint
+seed(1)
 
-data_file = open("yelp/yelp_academic_dataset_review.json")
-data = []
-stop_line = 0
-for line in data_file:
-    if stop_line == 15:
-        break
-    else:
-        data.append(json.loads(line)['text'])
-        stop_line += 1
-data_file.close()
+data = [randint(1, 150) for i in range(150)]
+print(data)
 
-len_dataset = list(map(len, data))
-
-
-def init_clusters(reviews):
-    clusters = []
-    for i in reviews:
-        clusters.append([len(i)])
-
-    return clusters
-
-
-clusters = init_clusters(data)
+num_centroids = 3
+clusters = {k: {'points': [], 'center': randint(1, 150), 'movable': True} for k in range(num_centroids)}
 
 print(clusters)
+
+while True:
+    for point in data:
+        pointCenterList = []
+        for index, cluster in clusters.items():
+            dist = abs(cluster['center'] - point)
+            pointCenterList.append((dist, index))
+        _, index = min(pointCenterList, key=lambda x:x[0])
+        clusters[index]['points'].append(point)
+
+    for index, cluster in clusters.items():
+        new_center = sum(cluster['points'])/len(cluster['points'])
+        if abs(cluster['center'] - new_center) < 0.005:
+             cluster['movable'] = False
+        else:
+            cluster['center'] = new_center
+    print('===')
+    print(clusters)
+    print('===')
+
+    if True in [cluster['movable'] for index, cluster in clusters.items()]:
+        for index, cluster in clusters.items():
+            cluster['points'] = []
+    else:
+        break
